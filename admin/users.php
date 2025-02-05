@@ -272,6 +272,7 @@ ob_start();
 <!-- Dodaj bibliotekę flag -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css">
 
 <?php
 // Definicje ról i ich tłumaczenia
@@ -416,7 +417,7 @@ $roleColors = [
                         <td>
                             <?php if ($user['country_code']): ?>
                                 <span title="<?php echo htmlspecialchars($user['country_name']); ?>" class="country-info">
-                                    <span class="flag"><?php echo getCountryFlag($user['country_code']); ?></span>
+                                    <span class="fi fi-<?php echo strtolower($user['country_code']); ?>"></span>
                                     <?php echo htmlspecialchars($user['country_name']); ?>
                                 </span>
                             <?php else: ?>
@@ -547,20 +548,20 @@ $roleColors = [
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: #ffffff; /* Jeszcze jaśniejszy kolor tekstu */
-    background: rgba(255, 255, 255, 0.15); /* Lekko jaśniejsze tło */
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Cień tekstu dla lepszej czytelności */
 }
 
-.country-info .flag {
-    font-size: 1.2rem; /* Większa flaga */
-    margin-right: 0.3rem;
+.country-info .fi {
+    font-size: 1.2em;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .text-muted {
-    color: rgba(255, 255, 255, 0.6) !important; /* Jaśniejszy kolor dla "Brak danych" */
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .user-details {
@@ -572,16 +573,16 @@ $roleColors = [
 .user-details i {
     width: 20px;
     margin-right: 8px;
-    color: #a8b6d0; /* Jaśniejszy kolor ikon */
+    color: #a8b6d0;
 }
 
 .user-details strong {
-    color: #a8b6d0; /* Jaśniejszy kolor nagłówków */
+    color: #a8b6d0;
     margin-right: 8px;
 }
 
 .user-details span {
-    color: #ffffff; /* Biały kolor dla wartości */
+    color: #ffffff;
 }
 
 .user-avatar {
