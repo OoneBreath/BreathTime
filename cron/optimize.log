@@ -1,0 +1,16 @@
+PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/home/onebreath/public_html/cron/../uploads/images): Failed to open directory: No such file or directory in /home/onebreath/public_html/cron/optimize_images.php:79
+Stack trace:
+#0 /home/onebreath/public_html/cron/optimize_images.php(79): RecursiveDirectoryIterator->__construct('/home/onebreath...')
+#1 {main}
+  thrown in /home/onebreath/public_html/cron/optimize_images.php on line 79
+Status: 500 Internal Server Error
+Content-type: text/html; charset=UTF-8
+
+PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/home/onebreath/public_html/cron/../uploads/images): Failed to open directory: No such file or directory in /home/onebreath/public_html/cron/optimize_images.php:79
+Stack trace:
+#0 /home/onebreath/public_html/cron/optimize_images.php(79): RecursiveDirectoryIterator->__construct('/home/onebreath...')
+#1 {main}
+  thrown in /home/onebreath/public_html/cron/optimize_images.php on line 79
+Status: 500 Internal Server Error
+Content-type: text/html; charset=UTF-8
+

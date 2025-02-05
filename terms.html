@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warunki Korzystania - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .terms-container {
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 120px;
+            padding-bottom: 40px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terms-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .terms-header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(40, 200, 100, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .terms-header h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(40, 200, 100, 0.2), 
+                rgba(40, 200, 100, 0.8),
+                rgba(40, 200, 100, 0.2)
+            );
+            margin: 1rem auto;
+            border-radius: 100px;
+            box-shadow: 0 0 20px rgba(40, 200, 100, 0.5);
+        }
+
+        .terms-section {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(40, 200, 100, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .terms-section:hover {
+            border-color: rgba(40, 200, 100, 0.3);
+            box-shadow: 0 0 30px rgba(40, 200, 100, 0.1);
+        }
+
+        .terms-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(40, 200, 100, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .terms-section:hover::before {
+            animation: shine 1.2s ease-in-out;
+            opacity: 1;
+        }
+
+        .terms-section h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-shadow: 0 0 10px rgba(40, 200, 100, 0.3);
+        }
+
+        .terms-section h2 i {
+            color: rgb(40, 200, 100);
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(40, 200, 100, 0.3);
+        }
+
+        .terms-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .terms-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .terms-section ul li {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .terms-section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            background: rgb(40, 200, 100);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(40, 200, 100, 0.5);
+        }
+
+        .last-update {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        @media (max-width: 768px) {
+            .terms-container {
+                padding-top: 80px;
+            }
+
+            .terms-header h1 {
+                font-size: 2rem;
+            }
+
+            .terms-content {
+                padding: 0 1rem;
+            }
+
+            .terms-section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terms-container">
+        <div class="terms-content">
+            <div class="terms-header">
+                <h1>Warunki Korzystania</h1>
+            </div>
+
+            <div class="terms-section">
+                <h2><i class='bx bx-book-open'></i>Postanowienia Ogólne</h2>
+                <p>
+                    Witamy w BreathTime. Korzystając z naszej strony internetowej i usług, zgadzasz się przestrzegać 
+                    poniższych warunków. Prosimy o uważne zapoznanie się z nimi przed rozpoczęciem korzystania z serwisu.
+                </p>
+                <ul>
+                    <li>Strona internetowa BreathTime jest własnością i jest zarządzana przez zespół BreathTime</li>
+                    <li>Korzystanie ze strony oznacza akceptację niniejszych warunków</li>
+                    <li>Zastrzegamy sobie prawo do modyfikacji warunków w dowolnym momencie</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2><i class='bx bx-user-check'></i>Zasady Korzystania</h2>
+                <p>
+                    Użytkownicy zobowiązują się do:
+                </p>
+                <ul>
+                    <li>Przestrzegania wszystkich obowiązujących przepisów prawa</li>
+                    <li>Nienaruszania praw innych użytkowników</li>
+                    <li>Niezamieszczania treści obraźliwych lub szkodliwych</li>
+                    <li>Nieudostępniania fałszywych lub wprowadzających w błąd informacji</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2><i class='bx bx-lock-alt'></i>Prywatność i Bezpieczeństwo</h2>
+                <p>
+                    Ochrona Twoich danych jest dla nas priorytetem:
+                </p>
+                <ul>
+                    <li>Gromadzimy tylko niezbędne dane osobowe</li>
+                    <li>Stosujemy zaawansowane metody szyfrowania</li>
+                    <li>Nie udostępniamy danych osobowych stronom trzecim</li>
+                    <li>Użytkownik ma prawo do wglądu i modyfikacji swoich danych</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2><i class='bx bx-copyright'></i>Prawa Autorskie</h2>
+                <p>
+                    Wszystkie materiały dostępne na stronie są chronione prawem autorskim:
+                </p>
+                <ul>
+                    <li>Zawartość strony jest własnością BreathTime lub naszych partnerów</li>
+                    <li>Kopiowanie i rozpowszechnianie treści wymaga zgody</li>
+                    <li>Dozwolone jest udostępnianie linków do naszych treści</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h2><i class='bx bx-message-square-dots'></i>Kontakt i Wsparcie</h2>
+                <p>
+                    W przypadku pytań lub wątpliwości:
+                </p>
+                <ul>
+                    <li>Skontaktuj się z nami przez email: info@breathtime.info</li>
+                    <li>Odpowiadamy na zgłoszenia w ciągu 48 godzin</li>
+                    <li>Jesteśmy otwarci na sugestie i uwagi użytkowników</li>
+                </ul>
+            </div>
+
+            <p class="last-update">
+                Ostatnia aktualizacja: 1 stycznia 2025
+            </p>
+        </div>
+    </div>
+</body>
+</html>

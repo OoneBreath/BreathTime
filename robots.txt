@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://breathtime.pl/sitemap.xml
+
+Disallow: /includes/
+Disallow: /admin/
+Disallow: /login.php
+Disallow: /register.php

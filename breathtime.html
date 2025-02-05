@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreathTime</title>
+    <link rel="stylesheet" href="assets/css/main.css?v=1.3">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <base target="_parent">
+    <!-- Dodaj meta tagi do kontroli cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body class="subpage">
+    <!-- Centralna treść na globusie -->
+    <div class="central-content">
+        <div class="content-box">
+            <div class="content-slide active" id="slide1">
+                <h2>BreathTime</h2>
+                <p>BreathTime to globalny ruch jednoczący ludzi na całym świecie. Jeden wybrany dzień w miesiącu staje się naszym wspólnym działaniem na rzecz czystego powietrza i lepszej przyszłości.</p>
+                <div class="next-button" onclick="showSlide(2)">Dowiedz się więcej →</div>
+            </div>
+
+            <div class="content-slide" id="slide2">
+                <h3>Jak działa BreathTime?</h3>
+                <ul>
+                    <li>Jeden wybrany dzień każdego miesiąca – wspólny oddech dla Ziemi</li>
+                    <li>Globalna współpraca na rzecz czystego powietrza.</li>
+                    <li>Synchronizacja działań na całym świecie.</li>
+                    <li>12 dni w roku, które mogą zmienić przyszłość.</li>
+                </ul>
+                <div class="nav-buttons">
+                    <div class="prev-button" onclick="showSlide(1)">← Wstecz</div>
+                    <div class="next-button" onclick="showSlide(3)">Dalej →</div>
+                </div>
+            </div>
+
+            <div class="content-slide" id="slide3">
+                <h3>Co robimy w ten dzień?</h3>
+                <ul>
+                    <li>Rezygnujemy z transportu spalinowego na rzecz ekologicznych opcji.</li>
+                    <li>Ograniczamy zużycie energii w codziennych działaniach.</li>
+                    <li>Organizujemy lokalne wydarzenia i działania proekologiczne.</li>
+                    <li>Uczymy się, inspirujemy i dzielimy wiedzą z innymi.</li>
+                </ul>
+                <div class="nav-buttons">
+                    <div class="prev-button" onclick="showSlide(2)">← Wstecz</div>
+                    <div class="next-button" onclick="showSlide(4)">Dalej →</div>
+                </div>
+            </div>
+
+            <div class="content-slide" id="slide4">
+                <h3>Dołącz do Ruchu</h3>
+                <p>Jeden dzień w miesiącu to szansa na realną zmianę. Dołącz do globalnej inicjatywy „BreathTime” i razem działajmy na rzecz naszej planety!</p>
+                <div class="action-buttons">
+                    <a href="./how-to-help.html" class="action-button" target="content-frame">Jak pomóc?</a>
+                    <a href="./ebook.html" class="action-button" target="content-frame">Materiały</a>
+                </div>
+                <div class="prev-button" onclick="showSlide(3)">← Wstecz</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSlide(slideNumber) {
+            document.querySelectorAll('.content-slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById('slide' + slideNumber).classList.add('active');
+        }
+    </script>
+</body>
+</html>

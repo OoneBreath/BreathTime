@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .faq-container {
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 120px;
+            padding-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        .faq-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .faq-header h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(0, 168, 255, 0.2), 
+                rgba(0, 168, 255, 0.8),
+                rgba(0, 168, 255, 0.2)
+            );
+            margin: 1rem auto;
+            border-radius: 100px;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .faq-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .faq-item {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(0, 168, 255, 0.3);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+
+        .faq-item:hover .faq-question {
+            color: rgb(0, 168, 255);
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.4);
+        }
+
+        .faq-item.active .faq-question {
+            color: rgb(0, 168, 255);
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-icon i {
+            color: rgb(0, 168, 255);
+            font-size: 1.5rem;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .faq-answer p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin: 0;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-item.active {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 168, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.1);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-answer {
+            height: auto;
+            opacity: 1;
+        }
+
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 168, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .faq-item:hover::before {
+            animation: shine 1.2s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        @media (max-width: 768px) {
+            .faq-container {
+                padding-top: 80px;
+            }
+
+            .faq-header h1 {
+                font-size: 2rem;
+            }
+
+            .faq-content {
+                padding: 0 1rem;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="faq-container">
+        <div class="faq-content">
+            <div class="faq-header">
+                <h1>Często zadawane pytania</h1>
+                <p>Znajdź odpowiedzi na najczęściej zadawane pytania o inicjatywie BreathTime</p>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Czym jest BreathTime?</span>
+                    <div class="faq-icon">
+                        <i class='bx bx-plus'></i>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        BreathTime to inicjatywa społeczna, która ma na celu poprawę jakości powietrza poprzez 
+                        comiesięczne akcje świadomego ograniczania emisji. W każdą pierwszą niedzielę miesiąca 
+                        zachęcamy do rezygnacji z aktywności generujących zanieczyszczenia.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Jak mogę dołączyć do BreathTime?</span>
+                    <div class="faq-icon">
+                        <i class='bx bx-plus'></i>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Dołączenie jest proste! Wystarczy, że zaczniesz uczestniczyć w naszych comiesięcznych 
+                        akcjach. Możesz też zapisać się do newslettera, aby otrzymywać powiadomienia o nadchodzących 
+                        wydarzeniach i dołączyć do naszej społeczności w mediach społecznościowych.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Co mogę zrobić w ramach BreathTime?</span>
+                    <div class="faq-icon">
+                        <i class='bx bx-plus'></i>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        W ramach BreathTime możesz: ograniczyć używanie samochodu, zrezygnować z palenia w kominku, 
+                        unikać używania urządzeń spalinowych, organizować lokalne wydarzenia edukacyjne, dzielić się 
+                        wiedzą o czystym powietrzu i zachęcać innych do udziału w inicjatywie.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Czy BreathTime jest skuteczne?</span>
+                    <div class="faq-icon">
+                        <i class='bx bx-plus'></i>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Tak! Nasze badania pokazują, że w dni BreathTime jakość powietrza w uczestniczących 
+                        miejscowościach znacząco się poprawia. Co więcej, inicjatywa pomaga budować świadomość 
+                        społeczną i zachęca do długoterminowych zmian w codziennych nawykach.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Jak mogę zorganizować lokalne wydarzenie BreathTime?</span>
+                    <div class="faq-icon">
+                        <i class='bx bx-plus'></i>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Aby zorganizować lokalne wydarzenie, skontaktuj się z nami przez email: info@breathtime.info. 
+                        Pomożemy Ci w organizacji, dostarczymy materiały informacyjne i połączymy z innymi 
+                        aktywnymi członkami społeczności w Twojej okolicy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

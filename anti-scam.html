@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Scam - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-y: overlay;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .anti-scam-container {
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 120px;
+            padding-bottom: 40px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .anti-scam-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .anti-scam-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .anti-scam-header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255, 60, 60, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .anti-scam-header h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(255, 60, 60, 0.2), 
+                rgba(255, 60, 60, 0.8),
+                rgba(255, 60, 60, 0.2)
+            );
+            margin: 1rem auto;
+            border-radius: 100px;
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.5);
+        }
+
+        .anti-scam-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .warning-card {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 60, 60, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .warning-card:hover {
+            border-color: rgba(255, 60, 60, 0.3);
+            box-shadow: 0 0 30px rgba(255, 60, 60, 0.1);
+        }
+
+        .warning-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 60, 60, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .warning-card:hover::before {
+            animation: shine 1.2s ease-in-out;
+            opacity: 1;
+        }
+
+        .warning-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .warning-title i {
+            font-size: 2rem;
+            color: rgb(255, 60, 60);
+            text-shadow: 0 0 10px rgba(255, 60, 60, 0.3);
+        }
+
+        .warning-title h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 60, 60, 0.3);
+        }
+
+        .warning-content {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .warning-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .warning-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .warning-list li i {
+            color: rgb(255, 60, 60);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255, 60, 60, 0.3);
+        }
+
+        .contact-info p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            background: rgb(255, 60, 60);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: rgb(255, 80, 80);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.3);
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        @media (max-width: 768px) {
+            .anti-scam-container {
+                padding-top: 80px;
+            }
+
+            .anti-scam-header h1 {
+                font-size: 2rem;
+            }
+
+            .anti-scam-content {
+                padding: 0 1rem;
+            }
+
+            .warning-title h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="anti-scam-container">
+        <div class="anti-scam-content">
+            <div class="anti-scam-header">
+                <h1>Anti-Scam</h1>
+                <p>Poznaj zasady bezpieczeństwa i chroń się przed oszustwami w ramach inicjatywy BreathTime</p>
+            </div>
+
+            <div class="warning-card">
+                <div class="warning-title">
+                    <i class='bx bx-shield-quarter'></i>
+                    <h2>Oficjalne Kanały Komunikacji</h2>
+                </div>
+                <div class="warning-content">
+                    <p>BreathTime komunikuje się tylko poprzez oficjalne kanały:</p>
+                    <ul class="warning-list">
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Oficjalna strona: www.breathtime.info</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Email: info@breathtime.info</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Zweryfikowane konta w mediach społecznościowych z niebieską odznaką</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-card">
+                <div class="warning-title">
+                    <i class='bx bx-error-circle'></i>
+                    <h2>Rozpoznaj Oszustwa</h2>
+                </div>
+                <div class="warning-content">
+                    <p>Uważaj na:</p>
+                    <ul class="warning-list">
+                        <li>
+                            <i class='bx bx-x-circle'></i>
+                            <span>Prośby o płatności lub darowizny poza oficjalną stroną</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-x-circle'></i>
+                            <span>Wiadomości o "wygranej" lub "specjalnej ofercie" związanej z BreathTime</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-x-circle'></i>
+                            <span>Podejrzane linki lub załączniki w emailach</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-x-circle'></i>
+                            <span>Prośby o podanie danych osobowych lub bankowych</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-card">
+                <div class="warning-title">
+                    <i class='bx bx-lock-alt'></i>
+                    <h2>Zasady Bezpieczeństwa</h2>
+                </div>
+                <div class="warning-content">
+                    <ul class="warning-list">
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Zawsze sprawdzaj adres URL strony (www.breathtime.info)</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Nie klikaj w podejrzane linki w emailach lub mediach społecznościowych</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Używaj silnych haseł i włącz weryfikację dwuetapową</span>
+                        </li>
+                        <li>
+                            <i class='bx bx-check-circle'></i>
+                            <span>Zgłaszaj podejrzane aktywności do naszego zespołu bezpieczeństwa</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h3>Zauważyłeś podejrzaną aktywność?</h3>
+                <p>Natychmiast skontaktuj się z naszym zespołem bezpieczeństwa</p>
+                <a href="mailto:security@breathtime.info" class="contact-button">
+                    <i class='bx bx-envelope'></i>
+                    Zgłoś Incydent
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

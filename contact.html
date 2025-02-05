@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - BreathTime</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.google.com/maps/vt/data=yXXRvt_uo9MGbzL9yAM2U1RoqoH4hXAT_cQtjEBiGtQXfNs_FO8nxXn2nv4GXpkFBxVpzrNxBWVTXCVNWbHHGZPLTtGBTXRJLFUK7vBsQDY') no-repeat center center;
+            background-size: cover;
+            filter: grayscale(1) brightness(0.3);
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .contact-container {
+            --map-url: url('https://tile.openstreetmap.org/12/2200/1343.png');
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            width: 100%;
+            background: var(--map-url) no-repeat center center;
+            background-size: cover;
+            filter: brightness(1.5);
+            opacity: 1;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.15),
+                       inset 0 0 30px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            margin: 20px;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .contact-info {
+            flex: 1;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form {
+            flex: 2;
+            padding: 40px;
+            min-width: 300px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        .contact-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .contact-description {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .form-inputs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-inputs-container input,
+        .form-inputs-container textarea {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .form-inputs-container input:focus,
+        .form-inputs-container textarea:focus {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.4);
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .submit-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-particles {
+            display: none;
+        }
+
+        .particle {
+            display: none;
+        }
+
+        @keyframes float {
+            display: none;
+        }
+
+        .contact-info .decoration {
+            display: none;
+        }
+
+        @keyframes rotate {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-info, .contact-form {
+                width: 100%;
+            }
+
+            .contact-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2 class="contact-title">Połącz się z nami</h2>
+            <p class="contact-description">
+                Masz pytania? Chcesz podzielić się swoimi przemyśleniami?<br>
+                Napisz do nas, a wspólnie odkryjemy nowe możliwości.<br><br>
+                <a href="mailto:info@breathtime.info" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease;">info@breathtime.info</a>
+            </p>
+        </div>
+
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-inputs-container">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" class="form-input" placeholder="Twoje imię" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Twój email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" class="form-input" placeholder="Temat" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" class="form-input" placeholder="Twoja wiadomość..." required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Obsługa formularza
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('name', this.querySelector('#name').value);
+            formData.append('email', this.querySelector('#email').value);
+            formData.append('subject', this.querySelector('#subject').value);
+            formData.append('message', this.querySelector('#message').value);
+            
+            // Animacja przycisku podczas wysyłania
+            const submitBtn = this.querySelector('.submit-btn');
+            submitBtn.style.opacity = '0.7';
+            submitBtn.textContent = 'Wysyłanie...';
+            
+            fetch('contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Dziękujemy za wiadomość! Odpowiemy najszybciej jak to możliwe.');
+                    this.reset();
+                } else {
+                    alert(data.message || 'Wystąpił błąd podczas wysyłania wiadomości');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Wystąpił błąd podczas wysyłania wiadomości');
+            })
+            .finally(() => {
+                submitBtn.style.opacity = '1';
+                submitBtn.textContent = 'Wyślij wiadomość';
+            });
+        });
+
+        // Pobierz lokalizację i zaktualizuj mapę
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const zoom = 12;
+                    const mapUrl = `https://tile.openstreetmap.org/${zoom}/${Math.floor((lon + 180) / 360 * Math.pow(2, zoom))}/${Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom))}.png`;
+                    document.querySelector('.contact-container').style.setProperty('--map-url', `url('${mapUrl}')`);
+                },
+                async error => {
+                    console.log('Próba lokalizacji przez IP...');
+                    try {
+                        const response = await fetch('https://ipapi.co/json/');
+                        const data = await response.json();
+                        const lat = data.latitude;
+                        const lon = data.longitude;
+                        const zoom = 12;
+                        const mapUrl = `https://tile.openstreetmap.org/${zoom}/${Math.floor((lon + 180) / 360 * Math.pow(2, zoom))}/${Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom))}.png`;
+                        document.querySelector('.contact-container').style.setProperty('--map-url', `url('${mapUrl}')`);
+                    } catch (err) {
+                        console.error('Nie udało się pobrać lokalizacji:', err);
+                    }
+                }
+            );
+        }
+    </script>
+</body>
+</html>

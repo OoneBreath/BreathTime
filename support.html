@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wesprzyj - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .support-container {
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 120px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .support-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .support-intro h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .support-intro p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .support-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.1);
+        }
+
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 168, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .support-card:hover::before {
+            animation: glassReflection 1.2s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes glassReflection {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .support-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 168, 255, 0.3);
+            box-shadow: 
+                0 10px 30px rgba(0, 168, 255, 0.2),
+                0 0 60px rgba(0, 168, 255, 0.1) inset;
+        }
+
+        .support-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(0, 168, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .support-card:hover .support-icon {
+            background: rgba(0, 168, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.3);
+        }
+
+        .support-icon i {
+            font-size: 32px;
+            color: rgb(0, 168, 255);
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover .support-icon i {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .support-card h2 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover h2 {
+            color: rgb(0, 168, 255);
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+
+        .support-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .support-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgb(0, 168, 255);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .support-link i {
+            transition: transform 0.3s ease;
+        }
+
+        .support-link:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+        }
+
+        .support-link:hover i {
+            transform: translateX(4px);
+        }
+
+        .coming-soon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 193, 7, 0.1);
+            color: rgb(255, 193, 7);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .support-intro h1 {
+                font-size: 2rem;
+            }
+            
+            .support-grid {
+                padding: 1rem;
+            }
+            
+            .support-container {
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="support-container">
+        <div class="support-intro">
+            <h1>Wesprzyj BreathTime</h1>
+            <p>
+                Twoje wsparcie pomaga nam budować świadomość i działać na rzecz czystszego powietrza. 
+                Każda forma pomocy przybliża nas do celu - lepszego powietrza dla wszystkich.
+            </p>
+        </div>
+
+        <div class="support-grid">
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class='bx bx-book-reader'></i>
+                </div>
+                <h2>E-book BreathTime</h2>
+                <p>
+                    Kup nasz e-book i poznaj szczegółowe informacje o tym, jak możesz przyczynić się 
+                    do poprawy jakości powietrza. Zawiera praktyczne porady i historie sukcesu.
+                </p>
+                <a href="ebook.html" class="support-link">
+                    Zobacz szczegóły <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+
+            <div class="support-card">
+                <span class="coming-soon">Wkrótce</span>
+                <div class="support-icon">
+                    <i class='bx bx-donate-heart'></i>
+                </div>
+                <h2>Wsparcie finansowe</h2>
+                <p>
+                    Twoja darowizna pomoże nam rozwijać inicjatywę BreathTime, organizować wydarzenia 
+                    i docierać do większej liczby osób. Każda złotówka ma znaczenie.
+                </p>
+                <a href="#" class="support-link">
+                    Wesprzyj nas <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class='bx bx-share-alt'></i>
+                </div>
+                <h2>Udostępnij</h2>
+                <p>
+                    Pomóż nam dotrzeć do większej liczby osób. Udostępnij informacje o BreathTime 
+                    w mediach społecznościowych i opowiedz o nas znajomym.
+                </p>
+                <a href="#" class="support-link">
+                    Udostępnij <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+
+            <div class="support-card">
+                <div class="support-icon">
+                    <i class='bx bx-group'></i>
+                </div>
+                <h2>Dołącz do społeczności</h2>
+                <p>
+                    Zostań częścią naszej społeczności. Organizuj lokalne wydarzenia BreathTime, 
+                    dziel się swoimi doświadczeniami i inspiruj innych do działania.
+                </p>
+                <a href="how-to-help.html" class="support-link">
+                    Dowiedz się więcej <i class='bx bx-right-arrow-alt'></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

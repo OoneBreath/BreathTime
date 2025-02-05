@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jak pomóc - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-container {
+            max-width: 1200px;
+            width: 90%;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .help-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 168, 255, 0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 168, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 168, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .help-icon {
+            font-size: 2.2em;
+            margin-bottom: 12px;
+            color: rgb(0, 168, 255);
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .help-title {
+            font-size: 1.2em;
+            color: white;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .help-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .help-button {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 168, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 168, 255, 0.4);
+            cursor: pointer;
+            font-size: 0.9em;
+            width: auto;
+        }
+
+        .help-button:hover {
+            background: rgba(0, 168, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 168, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .help-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 12px;
+            }
+
+            .help-card {
+                padding: 15px;
+            }
+
+            .help-icon {
+                font-size: 2em;
+            }
+
+            .help-title {
+                font-size: 1.1em;
+            }
+
+            .help-description {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="help-container">
+        <div class="help-grid">
+            <div class="help-card">
+                <div class="help-icon">🌱</div>
+                <h2 class="help-title">Działaj lokalnie</h2>
+                <p class="help-description">Organizuj wydarzenia, takie jak sprzątanie lub warsztaty ekologiczne w swojej okolicy.</p>
+                <a href="role-form.php?role=volunteer" target="_blank" class="help-button">Zorganizuj akcję</a>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">📚</div>
+                <h2 class="help-title">Edukacja</h2>
+                <p class="help-description">Prowadź warsztaty i szkolenia, aby dzielić się wiedzą o czystym powietrzu i ekologii.</p>
+                <a href="role-form.php?role=educator" target="_blank" class="help-button">Zostań edukatorem</a>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">🤝</div>
+                <h2 class="help-title">Wolontariat</h2>
+                <p class="help-description">Dołącz do naszego zespołu wolontariuszy i pomagaj w działaniach „BreathTime”.</p>
+                <a href="role-form.php?role=volunteer" target="_blank" class="help-button">Dołącz do nas</a>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">📢</div>
+                <h2 class="help-title">Promuj inicjatywę</h2>
+                <p class="help-description">Udostępniaj informacje o „BreathTime” w social mediach i angażuj znajomych.</p>
+                <a href="role-form.php?role=ambassador" target="_blank" class="help-button">Zostań ambasadorem</a>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">💰</div>
+                <h2 class="help-title">Wesprzyj</h2>
+                <p class="help-description">Twoje wsparcie finansowe pomoże rozwijać naszą inicjatywę i dotrzeć do większej liczby osób.</p>
+                <a href="donate.html" class="help-button">Wesprzyj nas</a>
+            </div>
+
+            <div class="help-card">
+                <div class="help-icon">🔍</div>
+                <h2 class="help-title">Monitoruj</h2>
+                <p class="help-description">Zgłaszaj problemy związane z zanieczyszczeniem powietrza w swoim otoczeniu.</p>
+                <a href="role-form.php?role=monitor" target="_blank" class="help-button">Zgłoś problem</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

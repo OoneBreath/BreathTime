@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wesprzyj nas - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .donate-container {
+            max-width: 800px;
+            margin: 120px auto 40px;
+            padding: 0 20px;
+        }
+
+        .donate-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .donate-header h1 {
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);
+        }
+
+        .donate-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .donate-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .donate-option {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 200, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .donate-option:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 200, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 200, 0, 0.1);
+        }
+
+        .donate-option.selected {
+            border-color: rgba(255, 200, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 200, 0, 0.2);
+        }
+
+        .amount {
+            font-size: 2em;
+            color: white;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(255, 200, 0, 0.3);
+        }
+
+        .description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .custom-amount {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 200, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+            color: white;
+            font-size: 1.1em;
+            margin: 20px 0;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-amount:focus {
+            border-color: rgba(255, 200, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 200, 0, 0.1);
+        }
+
+        #payment-form {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 200, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        #card-element {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        #card-errors {
+            color: #ff4444;
+            text-align: center;
+            margin: 10px 0;
+            min-height: 20px;
+        }
+
+        .donate-button {
+            background: linear-gradient(45deg, rgba(255, 200, 0, 0.8), rgba(255, 180, 0, 0.8));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .donate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 200, 0, 0.3);
+        }
+
+        .donate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .processing {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .processing.visible {
+            display: block;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+        }
+
+        .success-message.visible {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .donate-container {
+                margin-top: 80px;
+            }
+
+            .donate-header h1 {
+                font-size: 2em;
+            }
+
+            .donate-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="donate-container">
+        <div class="donate-header">
+            <h1>Wesprzyj BreathTime</h1>
+            <p>Twoje wsparcie pomoże nam w walce o czystsze powietrze dla wszystkich. Każda złotówka ma znaczenie!</p>
+        </div>
+
+        <div class="donate-options">
+            <div class="donate-option" data-amount="10">
+                <div class="amount">10 PLN</div>
+                <div class="description">Podstawowe wsparcie</div>
+            </div>
+            <div class="donate-option" data-amount="50">
+                <div class="amount">50 PLN</div>
+                <div class="description">Srebrne wsparcie</div>
+            </div>
+            <div class="donate-option" data-amount="100">
+                <div class="amount">100 PLN</div>
+                <div class="description">Złote wsparcie</div>
+            </div>
+        </div>
+
+        <input type="number" class="custom-amount" placeholder="Lub wpisz własną kwotę (PLN)" min="1" step="1">
+
+        <form id="payment-form">
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert"></div>
+            <button type="submit" class="donate-button">
+                Wesprzyj teraz
+            </button>
+        </form>
+
+        <div class="processing">
+            Przetwarzanie płatności...
+        </div>
+
+        <div class="success-message">
+            Dziękujemy za Twoje wsparcie! Potwierdzenie zostało wysłane na Twój adres email.
+        </div>
+    </div>
+
+    <script>
+        // Inicjalizacja Stripe
+        const stripe = Stripe('pk_test_your_publishable_key');
+        const elements = stripe.elements();
+
+        // Style dla elementu karty
+        const style = {
+            base: {
+                color: '#ffffff',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                },
+                backgroundColor: 'transparent'
+            },
+            invalid: {
+                color: '#ff4444',
+                iconColor: '#ff4444'
+            }
+        };
+
+        // Tworzenie elementu karty
+        const card = elements.create('card', {style: style});
+        card.mount('#card-element');
+
+        // Obsługa błędów walidacji karty
+        card.addEventListener('change', ({error}) => {
+            const displayError = document.getElementById('card-errors');
+            if (error) {
+                displayError.textContent = error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
+
+        // Obsługa wyboru kwoty
+        let selectedAmount = 0;
+        const options = document.querySelectorAll('.donate-option');
+        const customAmount = document.querySelector('.custom-amount');
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedAmount = parseInt(option.dataset.amount);
+                customAmount.value = '';
+            });
+        });
+
+        customAmount.addEventListener('input', (e) => {
+            options.forEach(opt => opt.classList.remove('selected'));
+            selectedAmount = parseInt(e.target.value) || 0;
+        });
+
+        // Obsługa formularza
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (selectedAmount <= 0) {
+                document.getElementById('card-errors').textContent = 'Proszę wybrać lub wpisać kwotę';
+                return;
+            }
+
+            const button = form.querySelector('button');
+            button.disabled = true;
+            document.querySelector('.processing').classList.add('visible');
+
+            try {
+                const {paymentMethod, error} = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: card,
+                    billing_details: {
+                        // Możesz dodać więcej szczegółów płatności
+                    }
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                // Wysłanie do backend'u
+                const response = await fetch('process-payment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        payment_method_id: paymentMethod.id,
+                        amount: selectedAmount
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    throw result.error;
+                }
+
+                // Sukces
+                document.querySelector('.success-message').classList.add('visible');
+                form.style.display = 'none';
+                document.querySelector('.donate-options').style.display = 'none';
+                customAmount.style.display = 'none';
+
+            } catch (error) {
+                document.getElementById('card-errors').textContent = error.message;
+                button.disabled = false;
+            }
+
+            document.querySelector('.processing').classList.remove('visible');
+        });
+    </script>
+</body>
+</html>

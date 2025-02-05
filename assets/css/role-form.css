@@ -1,0 +1,123 @@
+.role-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.role-container {
+    background: rgba(30, 60, 114, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 30px rgba(0, 168, 255, 0.3);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    color: white;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.role-title {
+    color: #4a90e2;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.role-description {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.role-textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 168, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    resize: vertical;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.role-textarea:focus {
+    outline: none;
+    border-color: rgba(0, 168, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+}
+
+.role-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.role-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.role-btn-primary {
+    background: #4a90e2;
+    color: white;
+}
+
+.role-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.role-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.role-btn-primary:hover {
+    background: #357abd;
+}
+
+.role-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.role-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #4a90e2;
+}
+
+.login-message {
+    text-align: center;
+    padding: 20px;
+    background: rgba(74, 144, 226, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}

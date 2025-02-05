@@ -1,0 +1,2 @@
+ALTER TABLE petitions
+ADD COLUMN recipient VARCHAR(255) NOT NULL DEFAULT 'Rząd RP';

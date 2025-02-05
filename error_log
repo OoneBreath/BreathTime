@@ -1,0 +1,10 @@
+[11-Jan-2025 22:56:32 UTC] PHP Warning:  require_once(../config/config.php): Failed to open stream: No such file or directory in /home/onebreath/public_html/migrations/add_user_roles.php on line 2
+[11-Jan-2025 22:56:32 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '../config/config.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/onebreath/public_html/migrations/add_user_roles.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/onebreath/public_html/migrations/add_user_roles.php on line 2
+[11-Jan-2025 22:57:55 UTC] PHP Warning:  require_once(../includes/config.php): Failed to open stream: No such file or directory in /home/onebreath/public_html/migrations/add_user_roles.php on line 2
+[11-Jan-2025 22:57:55 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '../includes/config.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/onebreath/public_html/migrations/add_user_roles.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/onebreath/public_html/migrations/add_user_roles.php on line 2

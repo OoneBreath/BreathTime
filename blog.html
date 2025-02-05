@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - BreathTime</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: transparent;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .coming-soon {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coming-soon h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+        }
+
+        .coming-soon p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .coming-soon-card {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .coming-soon-card:hover {
+            border-color: rgba(0, 168, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.1);
+        }
+
+        .coming-soon-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 168, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .coming-soon-card:hover::before {
+            animation: shine 1.2s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .notification-form {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .notification-input {
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            min-width: 300px;
+            font-size: 1rem;
+        }
+
+        .notification-input:focus {
+            outline: none;
+            border-color: rgb(0, 168, 255);
+        }
+
+        .notification-button {
+            padding: 0.75rem 2rem;
+            border-radius: 100px;
+            border: none;
+            background: rgb(0, 168, 255);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .notification-button:hover {
+            background: rgb(0, 140, 255);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon h1 {
+                font-size: 2rem;
+            }
+
+            .coming-soon-card {
+                padding: 2rem;
+            }
+
+            .notification-input {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="coming-soon">
+        <div class="coming-soon-card">
+            <h1>Blog BreathTime</h1>
+            <p>
+                Już wkrótce pojawią się tutaj inspirujące artykuły o czystym powietrzu, 
+                historiach naszej społeczności i praktycznych poradach. Zostaw swój email, 
+                a powiadomimy Cię o starcie bloga.
+            </p>
+            <form class="notification-form">
+                <input type="email" class="notification-input" placeholder="Twój adres email" required>
+                <button type="submit" class="notification-button">
+                    Powiadom mnie <i class='bx bx-bell'></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

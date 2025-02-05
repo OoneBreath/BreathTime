@@ -1,0 +1,10 @@
+[15-Jan-2025 01:55:55 UTC] PHP Warning:  Undefined variable $conn in /home/onebreath/public_html/config/migrate_add_phone_ip.php on line 11
+[15-Jan-2025 01:55:55 UTC] PHP Fatal error:  Uncaught Error: Call to a member function exec() on null in /home/onebreath/public_html/config/migrate_add_phone_ip.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/onebreath/public_html/config/migrate_add_phone_ip.php on line 11
+[15-Jan-2025 01:57:20 UTC] PHP Warning:  Undefined variable $conn in /home/onebreath/public_html/config/migrate_add_consents.php on line 9
+[15-Jan-2025 01:57:20 UTC] PHP Fatal error:  Uncaught Error: Call to a member function exec() on null in /home/onebreath/public_html/config/migrate_add_consents.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/onebreath/public_html/config/migrate_add_consents.php on line 9
