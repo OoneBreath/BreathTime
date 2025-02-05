@@ -250,17 +250,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Pobierz listę użytkowników
 $users = $db->query(
     "SELECT u.*, 
-            (SELECT COUNT(*) FROM signatures WHERE user_id = u.id) as signatures_count,
-            (SELECT COUNT(*) FROM petitions WHERE created_by = u.id) as petitions_count,
-            CASE 
-                WHEN u.status = 'active' THEN 'Aktywny'
-                WHEN u.status = 'unverified' THEN 'Niezweryfikowany'
-                WHEN u.status = 'suspended' THEN 'Zawieszony'
-                ELSE u.status
-            END as status_pl
+            (SELECT COUNT(*) FROM signatures s WHERE s.user_id = u.id) as signatures_count,
+            (SELECT COUNT(*) FROM petition_proposals pp WHERE pp.user_id = u.id) as petitions_count
      FROM users u 
      ORDER BY u.created_at DESC"
 )->fetchAll();
+
+// Funkcja do konwersji kodu kraju na flagę emoji
+function getCountryFlag($countryCode) {
+    if (empty($countryCode)) return '';
+    // Konwersja kodu kraju na emoji flagi
+    $flag = mb_convert_encoding('&#' . (127397 + ord(substr($countryCode, 0, 1))) . ';', 'UTF-8', 'HTML-ENTITIES') .
+            mb_convert_encoding('&#' . (127397 + ord(substr($countryCode, 1, 1))) . ';', 'UTF-8', 'HTML-ENTITIES');
+    return $flag;
+}
 
 $page_title = 'Zarządzanie użytkownikami - Panel admina';
 ob_start(); 
@@ -336,6 +339,7 @@ $roleColors = [
                     <th>ID</th>
                     <th>Podstawowe informacje</th>
                     <th>Status</th>
+                    <th>Kraj</th>
                     <th>Akcje</th>
                 </tr>
             </thead>
@@ -406,8 +410,18 @@ $roleColors = [
                         </td>
                         <td>
                             <span class="status-badge <?php echo $user['status'] === 'active' ? 'active' : ($user['status'] === 'suspended' ? 'suspended' : 'unverified'); ?>">
-                                <?php echo $user['status_pl']; ?>
+                                <?php echo $user['status'] === 'active' ? 'Aktywny' : ($user['status'] === 'suspended' ? 'Zawieszony' : 'Niezweryfikowany'); ?>
                             </span>
+                        </td>
+                        <td>
+                            <?php if ($user['country_code']): ?>
+                                <span title="<?php echo htmlspecialchars($user['country_name']); ?>" class="country-info">
+                                    <?php echo getCountryFlag($user['country_code']); ?>
+                                    <?php echo htmlspecialchars($user['country_name']); ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="text-muted">Brak danych</span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <div class="btn-group">
@@ -437,7 +451,7 @@ $roleColors = [
                         </td>
                     </tr>
                     <tr class="details-row" style="display: none;">
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="user-details p-3">
                                 <div class="row">
                                     <div class="col-md-6">
