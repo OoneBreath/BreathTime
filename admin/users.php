@@ -251,12 +251,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $users = $db->query(
     "SELECT u.*, 
             (SELECT COUNT(*) FROM signatures s WHERE s.user_id = u.id) as signatures_count,
-            (SELECT COUNT(*) FROM petition_proposals pp WHERE pp.user_id = u.id) as petitions_count,
-            (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
-             FROM petition_proposals pp 
-             JOIN petitions p ON pp.id = p.id 
-             WHERE pp.user_id = u.id 
-             LIMIT 3) as petition_titles,
             (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
              FROM signatures s 
              JOIN petitions p ON s.petition_id = p.id 
@@ -445,7 +439,6 @@ $roleColors = [
                                                 'last_login' => $user['last_login_ip'],
                                                 'registration_ip' => $user['registration_ip'],
                                                 'role_description' => $user['role_description'],
-                                                'petition_titles' => $user['petition_titles'],
                                                 'signed_petition_titles' => $user['signed_petition_titles']
                                             ])); 
                                         ?>')" title="Szczegóły użytkownika">
@@ -497,11 +490,6 @@ $roleColors = [
                                                 <i class="fas fa-file-signature" title="Podpisane petycje"></i>
                                                 <strong>Podpisane petycje (<?php echo $user['signatures_count']; ?>):</strong>
                                                 <span class="details-signatures"></span>
-                                            </div>
-                                            <div class="mb-2">
-                                                <i class="fas fa-file-alt" title="Dodane petycje"></i>
-                                                <strong>Dodane petycje (<?php echo $user['petitions_count']; ?>):</strong>
-                                                <span class="details-petitions"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -831,11 +819,9 @@ function toggleDetails(button, userDataJson) {
     detailsContent.querySelector('.details-registration-ip').textContent = userData.registration_ip || 'Brak danych';
     detailsContent.querySelector('.details-last-login').textContent = userData.last_login || 'Brak danych';
     
-    // Petycje
+    // Podpisane petycje
     detailsContent.querySelector('.details-signatures').textContent = 
         userData.signed_petition_titles || 'Brak podpisanych petycji';
-    detailsContent.querySelector('.details-petitions').textContent = 
-        userData.petition_titles || 'Brak dodanych petycji';
 
     // Przełączanie widoczności
     if (detailsRow.style.display === 'none') {
