@@ -416,7 +416,7 @@ $roleColors = [
                         <td>
                             <?php if ($user['country_code']): ?>
                                 <span title="<?php echo htmlspecialchars($user['country_name']); ?>" class="country-info">
-                                    <?php echo getCountryFlag($user['country_code']); ?>
+                                    <span class="flag"><?php echo getCountryFlag($user['country_code']); ?></span>
                                     <?php echo htmlspecialchars($user['country_name']); ?>
                                 </span>
                             <?php else: ?>
@@ -463,13 +463,18 @@ $roleColors = [
                                             </div>
                                             <div class="mb-2 details-phone-container" style="display: none;">
                                                 <i class="fas fa-phone" title="Numer telefonu"></i>
-                                                <strong>Telefon:</strong> 
+                                                <strong>Telefon:</strong>
                                                 <span class="details-phone"></span>
                                             </div>
                                             <div class="mb-2">
-                                                <i class="fas fa-calendar" title="Data dołączenia"></i>
-                                                <strong>Data dołączenia:</strong> 
-                                                <span class="details-joined"><?php echo date('d.m.Y', strtotime($user['created_at'])); ?></span>
+                                                <i class="fas fa-map-marker-alt" title="IP rejestracji"></i>
+                                                <strong>IP rejestracji:</strong>
+                                                <span class="details-registration-ip"></span>
+                                            </div>
+                                            <div class="mb-2">
+                                                <i class="fas fa-sign-in-alt" title="Ostatnie IP logowania"></i>
+                                                <strong>Ostatnie IP:</strong>
+                                                <span class="details-last-login"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -538,220 +543,62 @@ $roleColors = [
 }
 
 .country-info {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #ffffff; /* Jeszcze jaśniejszy kolor tekstu */
+    background: rgba(255, 255, 255, 0.15); /* Lekko jaśniejsze tło */
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Cień tekstu dla lepszej czytelności */
 }
 
-.country-name {
-    color: #8e9cc0;
+.country-info .flag {
+    font-size: 1.2rem; /* Większa flaga */
+    margin-right: 0.3rem;
 }
 
-.flag-icon {
-    margin-right: 8px;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important; /* Jaśniejszy kolor dla "Brak danych" */
 }
 
 .user-details {
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid var(--border);
-    color: #e1e1e1;
-}
-
-.details-section {
-    background: rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    margin: 10px;
 }
 
 .user-details i {
     width: 20px;
     margin-right: 8px;
-    color: #8e9cc0;
+    color: #a8b6d0; /* Jaśniejszy kolor ikon */
 }
 
 .user-details strong {
-    color: #8e9cc0;
+    color: #a8b6d0; /* Jaśniejszy kolor nagłówków */
     margin-right: 8px;
-    font-weight: 500;
 }
 
-.user-details span:not(.flag-icon) {
-    color: #ffffff;
-}
-
-.badge {
-    font-size: 0.85em;
-    padding: 0.4em 0.8em;
-    border-radius: 12px;
-}
-
-.role-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    color: white;
-    font-size: 0.85em;
-    margin-top: 4px;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.requested-role-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    background-color: rgba(255,255,255,0.1);
-    color: #8e9cc0;
-    font-size: 0.85em;
-    margin-top: 4px;
-    font-style: italic;
-}
-
-.role-pending {
-    background-color: rgba(255, 193, 7, 0.1) !important;
+.user-details span {
+    color: #ffffff; /* Biały kolor dla wartości */
 }
 
 .user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--secondary-bg);
-    border: 2px solid var(--border);
+    margin: 0 auto;
 }
 
-.user-avatar img {
+.avatar-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.btn-group .btn {
-    padding: 0.25rem 0.5rem;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.details-row td {
-    padding: 0 !important;
-}
-
-.text-muted {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #8e9cc0 !important;
-}
-
-/* Style dla tooltipów */
-[title] {
-    position: relative;
-    cursor: help;
-}
-
-.btn[title] {
-    cursor: pointer;
-}
-
-/* Poprawka dla buttonów z ikonami */
-.btn-group .btn {
-    position: relative;
-    transition: all 0.2s ease-in-out;
-}
-
-.btn-group .btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-/* Zwiększenie widoczności ikon w szczegółach */
-.user-details i {
-    width: 20px;
-    margin-right: 8px;
-    color: #8e9cc0;
-    transition: color 0.2s ease-in-out;
-}
-
-.user-details i:hover {
-    color: #ffffff;
-}
-
-.iti__flag {
-    width: 20px;
-    height: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png");
-    background-repeat: no-repeat;
-    margin-right: 8px;
-    object-fit: cover;
-}
-
-.country-info {
-    display: flex;
-    align-items: center;
-    margin-top: 0.5rem;
-}
-
-.country-name {
-    color: #8e9cc0;
-    font-size: 0.9em;
-}
-
-.btn-group {
-    display: flex;
-    gap: 4px;
-}
-
-.btn-group form {
-    margin: 0;
-}
-
-.btn-group .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.btn-group .btn:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-.btn-success {
-    background-color: #4CAF50;
-    border-color: #43A047;
-}
-
-.btn-warning {
-    background-color: #FF9800;
-    border-color: #F57C00;
-}
-
-.btn-info {
-    background-color: #2196F3;
-    border-color: #1E88E5;
-}
-
-.btn-danger {
-    background-color: #F44336;
-    border-color: #E53935;
 }
 
 .role-section {
@@ -832,7 +679,6 @@ $roleColors = [
 .action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .action-btn:active {
@@ -962,117 +808,32 @@ function toggleDetails(button, userDataJson) {
     const userData = JSON.parse(userDataJson);
     const row = button.closest('tr');
     const detailsRow = row.nextElementSibling;
-    const icon = button.querySelector('i');
-    
-    if (detailsRow.style.display === 'none') {
-        // Pokaż szczegóły
-        detailsRow.style.display = 'table-row';
-        icon.classList.remove('fa-plus');
-        icon.classList.add('fa-minus');
-        
-        // Wypełnij dane
-        detailsRow.querySelector('.details-email').textContent = userData.email;
-        
-        if (userData.phone) {
-            detailsRow.querySelector('.details-phone-container').style.display = 'block';
-            detailsRow.querySelector('.details-phone').textContent = userData.phone;
-        }
-        
-        if (userData.ip_address) {
-            detailsRow.querySelector('.details-ip').textContent = userData.ip_address;
-        } else {
-            detailsRow.querySelector('.details-ip').textContent = 'Brak danych';
-        }
-        
-        detailsRow.querySelector('.details-petitions').textContent = userData.petitions_count;
-        detailsRow.querySelector('.details-signatures').textContent = userData.signatures_count;
+    const detailsContent = detailsRow.querySelector('.user-details');
+
+    // Aktualizacja szczegółów
+    detailsContent.querySelector('.details-email').textContent = userData.email;
+    if (userData.phone) {
+        detailsContent.querySelector('.details-phone').textContent = userData.phone;
+        detailsContent.querySelector('.details-phone-container').style.display = 'block';
     } else {
-        // Ukryj szczegóły
+        detailsContent.querySelector('.details-phone-container').style.display = 'none';
+    }
+    detailsContent.querySelector('.details-registration-ip').textContent = userData.registration_ip || 'Brak danych';
+    detailsContent.querySelector('.details-last-login').textContent = userData.last_login || 'Brak danych';
+
+    // Przełączanie widoczności
+    if (detailsRow.style.display === 'none') {
+        detailsRow.style.display = 'table-row';
+        button.querySelector('i').classList.remove('fa-info-circle');
+        button.querySelector('i').classList.add('fa-times-circle');
+        button.title = 'Zamknij szczegóły';
+    } else {
         detailsRow.style.display = 'none';
-        icon.classList.remove('fa-minus');
-        icon.classList.add('fa-plus');
+        button.querySelector('i').classList.remove('fa-times-circle');
+        button.querySelector('i').classList.add('fa-info-circle');
+        button.title = 'Szczegóły użytkownika';
     }
 }
-
-function showDescription(description) {
-    const modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100%';
-    modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.zIndex = '1050';
-    
-    modal.innerHTML = `
-        <div style="
-            background: #1a1f2d;
-            border-radius: 8px;
-            padding: 20px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
-        ">
-            <div style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 15px;
-                border-bottom: 1px solid #2d3546;
-                padding-bottom: 10px;
-            ">
-                <h5 style="
-                    margin: 0;
-                    color: #ffffff;
-                    font-size: 1.25rem;
-                ">Opis roli</h5>
-                <button style="
-                    background: none;
-                    border: none;
-                    color: #8e9cc0;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                    padding: 5px;
-                " onclick="this.closest('div[style]').parentElement.remove()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div style="
-                background: #232836;
-                border: 1px solid #2d3546;
-                border-radius: 4px;
-                padding: 15px;
-                color: #e1e1e1;
-                white-space: pre-wrap;
-                line-height: 1.5;
-            ">${description}</div>
-        </div>
-    `;
-    
-    // Zamykanie po kliknięciu w tło
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-    
-    document.body.appendChild(modal);
-}
-
-// Inicjalizacja tooltipów Bootstrap
-document.addEventListener('DOMContentLoaded', function() {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
-    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl, {
-            placement: 'top',
-            trigger: 'hover'
-        });
-    });
-});
 </script>
 
 <?php
