@@ -310,6 +310,277 @@ $roleColors = [
 ];
 ?>
 
+<style>
+.table {
+    --bs-table-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.08);
+    margin-bottom: 0;
+}
+
+/* Styl dla aktywnego wiersza */
+.table tr.active-row {
+    background-color: rgba(62, 152, 255, 0.15) !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Styl dla wiersza ze szczegółami */
+.table tr.details-row.active {
+    background-color: rgba(62, 152, 255, 0.1) !important;
+    box-shadow: inset 0 0 15px rgba(62, 152, 255, 0.05);
+}
+
+.details-row .user-details {
+    padding: 1.5rem !important;
+    border-radius: 8px;
+    margin: 0.5rem;
+}
+
+.user-id {
+    color: #ffd700 !important;
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.user-name {
+    color: #ffffff !important;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.country-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+}
+
+.country-info .fi {
+    font-size: 1.2em;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.user-details {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin: 10px;
+}
+
+.user-details i {
+    width: 20px;
+    margin-right: 8px;
+    color: #a8b6d0;
+}
+
+.user-details strong {
+    color: #a8b6d0;
+    margin-right: 8px;
+}
+
+.user-details span {
+    color: #ffffff;
+}
+
+.user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-avatar:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Większy avatar dla aktywnego wiersza */
+.active-row .user-avatar {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 12px rgba(62, 152, 255, 0.3);
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover .avatar-img {
+    transform: scale(1.1);
+}
+
+.role-section {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.role-label {
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.current-role {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9em;
+    font-weight: 500;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.requested-role-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 8px;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn.approve {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.3));
+    border-color: rgba(46, 204, 113, 0.4);
+    color: #2ecc71;
+}
+
+.action-btn.reject {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(231, 76, 60, 0.3));
+    border-color: rgba(231, 76, 60, 0.4);
+    color: #e74c3c;
+}
+
+.action-btn.promote {
+    background: linear-gradient(135deg, rgba(142, 68, 173, 0.2), rgba(142, 68, 173, 0.3));
+    border-color: rgba(142, 68, 173, 0.4);
+    color: #8e44ad;
+}
+
+.action-btn.demote {
+    background: linear-gradient(135deg, rgba(211, 84, 0, 0.2), rgba(211, 84, 0, 0.3));
+    border-color: rgba(211, 84, 0, 0.4);
+    color: #d35400;
+}
+
+.action-btn.reset {
+    background: linear-gradient(135deg, rgba(127, 140, 141, 0.2), rgba(127, 140, 141, 0.3));
+    border-color: rgba(127, 140, 141, 0.4);
+    color: #7f8c8d;
+}
+
+.action-btn i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.role-actions {
+    display: inline-flex;
+    gap: 6px;
+}
+
+.role-section {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.role-label {
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Dodajemy hover efekt dla wszystkich przycisków w tabeli */
+.table .btn {
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.table .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.table .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>
+
 <div class="content-box">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Zarządzanie użytkownikami</h1>
@@ -503,255 +774,6 @@ $roleColors = [
     </div>
 </div>
 
-<style>
-.table {
-    --bs-table-bg: rgba(255, 255, 255, 0.05);
-    --bs-table-color: #e1e1e1;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-}
-
-.table th {
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0.2);
-    border-bottom: 2px solid var(--border);
-    padding: 1rem;
-    font-weight: 600;
-}
-
-.table td {
-    border-color: var(--border);
-    padding: 1rem;
-    vertical-align: middle;
-}
-
-.user-id {
-    color: #ffd700 !important;
-    font-weight: 500;
-    font-size: 1.1em;
-}
-
-.user-name {
-    color: #ffffff !important;
-    font-size: 1.1em;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.country-info {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px;
-}
-
-.country-info .fi {
-    font-size: 1.2em;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.text-muted {
-    color: rgba(255, 255, 255, 0.6) !important;
-}
-
-.user-details {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    margin: 10px;
-}
-
-.user-details i {
-    width: 20px;
-    margin-right: 8px;
-    color: #a8b6d0;
-}
-
-.user-details strong {
-    color: #a8b6d0;
-    margin-right: 8px;
-}
-
-.user-details span {
-    color: #ffffff;
-}
-
-.user-avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-.avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.role-section {
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-}
-
-.role-label {
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-weight: 500;
-    color: white;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.current-role {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 4px;
-    color: white;
-    font-size: 0.9em;
-    font-weight: 500;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.requested-role-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 4px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    gap: 8px;
-}
-
-.action-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.action-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.action-btn.approve {
-    background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.3));
-    border-color: rgba(46, 204, 113, 0.4);
-    color: #2ecc71;
-}
-
-.action-btn.reject {
-    background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(231, 76, 60, 0.3));
-    border-color: rgba(231, 76, 60, 0.4);
-    color: #e74c3c;
-}
-
-.action-btn.promote {
-    background: linear-gradient(135deg, rgba(142, 68, 173, 0.2), rgba(142, 68, 173, 0.3));
-    border-color: rgba(142, 68, 173, 0.4);
-    color: #8e44ad;
-}
-
-.action-btn.demote {
-    background: linear-gradient(135deg, rgba(211, 84, 0, 0.2), rgba(211, 84, 0, 0.3));
-    border-color: rgba(211, 84, 0, 0.4);
-    color: #d35400;
-}
-
-.action-btn.reset {
-    background: linear-gradient(135deg, rgba(127, 140, 141, 0.2), rgba(127, 140, 141, 0.3));
-    border-color: rgba(127, 140, 141, 0.4);
-    color: #7f8c8d;
-}
-
-.action-btn i {
-    font-size: 1.1rem;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.role-actions {
-    display: inline-flex;
-    gap: 6px;
-}
-
-.role-section {
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.role-label {
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Dodajemy hover efekt dla wszystkich przycisków w tabeli */
-.table .btn {
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-.table .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.table .btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-</style>
-
 <script>
 function confirmAction(action, userId, role = '') {
     let message = '';
@@ -806,6 +828,12 @@ function toggleDetails(button, userDataJson) {
     const detailsRow = row.nextElementSibling;
     const detailsContent = detailsRow.querySelector('.user-details');
 
+    // Usuwamy aktywną klasę ze wszystkich wierszy
+    document.querySelectorAll('.table tr').forEach(tr => {
+        tr.classList.remove('active-row');
+        tr.classList.remove('active');
+    });
+
     // Aktualizacja szczegółów
     detailsContent.querySelector('.details-email').textContent = userData.email;
     if (userData.phone) {
@@ -823,14 +851,18 @@ function toggleDetails(button, userDataJson) {
     detailsContent.querySelector('.details-signatures').textContent = 
         userData.signed_petition_titles || 'Brak podpisanych petycji';
 
-    // Przełączanie widoczności
+    // Przełączanie widoczności i aktywnego stanu
     if (detailsRow.style.display === 'none') {
         detailsRow.style.display = 'table-row';
+        row.classList.add('active-row');
+        detailsRow.classList.add('active');
         button.querySelector('i').classList.remove('fa-info-circle');
         button.querySelector('i').classList.add('fa-times-circle');
         button.title = 'Zamknij szczegóły';
     } else {
         detailsRow.style.display = 'none';
+        row.classList.remove('active-row');
+        detailsRow.classList.remove('active');
         button.querySelector('i').classList.remove('fa-times-circle');
         button.querySelector('i').classList.add('fa-info-circle');
         button.title = 'Szczegóły użytkownika';
