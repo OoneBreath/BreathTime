@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 require_once 'includes/config.php';
 require_once 'includes/Mailer.php';
 require_once 'includes/GeoLocation.php';
+require_once 'includes/SecurityCheck.php';
 session_start();
 
 if (isset($_SESSION['user_id'])) {
@@ -32,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
+
+        // Sprawdź zabezpieczenia anty-botowe
+        $security = SecurityCheck::getInstance();
+        $security->validateRegistration($name, $email, $ip_address);
 
         // Pobierz dane geolokalizacyjne
         try {
