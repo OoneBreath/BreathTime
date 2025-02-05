@@ -317,10 +317,40 @@ $roleColors = [
     margin-bottom: 0;
 }
 
+/* Style dla nagłówków tabeli */
+.table thead th {
+    background: linear-gradient(180deg, rgba(62, 152, 255, 0.2), rgba(62, 152, 255, 0.1));
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: 2px solid rgba(62, 152, 255, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
 /* Styl dla aktywnego wiersza */
 .table tr.active-row {
     background-color: rgba(62, 152, 255, 0.15) !important;
     transition: background-color 0.3s ease;
+}
+
+/* Większy avatar dla aktywnego wiersza */
+.active-row .user-avatar {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 12px rgba(62, 152, 255, 0.3);
 }
 
 /* Styl dla wiersza ze szczegółami */
@@ -406,13 +436,6 @@ $roleColors = [
 .user-avatar:hover {
     transform: scale(1.15);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Większy avatar dla aktywnego wiersza */
-.active-row .user-avatar {
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 4px 12px rgba(62, 152, 255, 0.3);
 }
 
 .avatar-img {
@@ -611,12 +634,12 @@ $roleColors = [
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Avatar</th>
-                    <th>ID</th>
+                    <th style="width: 60px;">Avatar</th>
+                    <th style="width: 60px;">ID</th>
                     <th>Podstawowe informacje</th>
-                    <th>Status</th>
-                    <th>Kraj</th>
-                    <th>Akcje</th>
+                    <th style="width: 120px;">Status</th>
+                    <th style="width: 180px;">Kraj</th>
+                    <th style="width: 100px;">Akcje</th>
                 </tr>
             </thead>
             <tbody>
