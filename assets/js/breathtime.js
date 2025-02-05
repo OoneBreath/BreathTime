@@ -60,42 +60,45 @@ document.addEventListener('DOMContentLoaded', function() {
         
         camera.position.z = 10;
 
-        // Zmienne do śledzenia myszki
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetRotationX = 0;
-        let targetRotationY = 0;
-        let currentRotationX = 0;
-        let currentRotationY = 0;
+        // Bazowa rotacja kuli (obrót wokół własnej osi)
+        let baseRotationY = 0;
+        const baseRotationSpeed = 0.001; // Zmniejszona prędkość bazowej rotacji
 
-        // Nasłuchiwanie ruchu myszki
+        // Śledzenie myszki
+        let isMouseOver = false;
         container.addEventListener('mousemove', function(event) {
-            // Obliczanie pozycji myszki względem środka kontenera
+            isMouseOver = true;
             const rect = container.getBoundingClientRect();
-            mouseX = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
-            mouseY = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1;
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
             
-            // Obliczanie docelowej rotacji
-            targetRotationY = mouseX * Math.PI * 0.5;
-            targetRotationX = mouseY * Math.PI * 0.25;
+            // Obliczanie kąta między myszką a środkiem
+            const angleX = (event.clientX - centerX) / (rect.width / 2) * Math.PI / 4;
+            const angleY = (event.clientY - centerY) / (rect.height / 2) * Math.PI / 4;
+            
+            // Bezpośrednie ustawienie rotacji
+            globe.rotation.y = baseRotationY + angleX;
+            globe.rotation.x = angleY;
         });
 
-        // Dodanie efektu inercji do obrotu
-        function updateRotation() {
-            // Płynne przejście do docelowej rotacji
-            currentRotationX += (targetRotationX - currentRotationX) * 0.05;
-            currentRotationY += (targetRotationY - currentRotationY) * 0.05;
-
-            // Zastosowanie rotacji do kuli
-            globe.rotation.x = currentRotationX;
-            globe.rotation.y += 0.002; // Bazowa rotacja
-            globe.rotation.y += (targetRotationY - globe.rotation.y) * 0.05;
-        }
+        container.addEventListener('mouseleave', function() {
+            isMouseOver = false;
+        });
         
         // Animacja
         function animate() {
             requestAnimationFrame(animate);
-            updateRotation();
+            
+            // Aktualizacja bazowej rotacji
+            baseRotationY += baseRotationSpeed;
+            
+            // Jeśli myszka nie jest nad kulą, używamy tylko bazowej rotacji
+            if (!isMouseOver) {
+                globe.rotation.y = baseRotationY;
+                // Płynny powrót rotacji X do 0
+                globe.rotation.x *= 0.95;
+            }
+            
             renderer.render(scene, camera);
         }
         animate();
@@ -108,12 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
-        });
-
-        // Reset rotacji gdy myszka opuszcza kontener
-        container.addEventListener('mouseleave', function() {
-            targetRotationX = 0;
-            targetRotationY = 0;
         });
     }
     
