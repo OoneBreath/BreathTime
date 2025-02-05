@@ -251,7 +251,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $users = $db->query(
     "SELECT u.*, 
             (SELECT COUNT(*) FROM signatures s WHERE s.user_id = u.id) as signatures_count,
-            (SELECT COUNT(*) FROM petition_proposals pp WHERE pp.user_id = u.id) as petitions_count
+            (SELECT COUNT(*) FROM petition_proposals pp WHERE pp.user_id = u.id) as petitions_count,
+            (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
+             FROM petition_proposals pp 
+             JOIN petitions p ON pp.petition_id = p.id 
+             WHERE pp.user_id = u.id 
+             LIMIT 3) as petition_titles,
+            (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
+             FROM signatures s 
+             JOIN petitions p ON s.petition_id = p.id 
+             WHERE s.user_id = u.id 
+             LIMIT 3) as signed_petition_titles
      FROM users u 
      ORDER BY u.created_at DESC"
 )->fetchAll();
@@ -434,7 +444,9 @@ $roleColors = [
                                                 'created_at' => $user['created_at'],
                                                 'last_login' => $user['last_login_ip'],
                                                 'registration_ip' => $user['registration_ip'],
-                                                'role_description' => $user['role_description']
+                                                'role_description' => $user['role_description'],
+                                                'petition_titles' => $user['petition_titles'],
+                                                'signed_petition_titles' => $user['signed_petition_titles']
                                             ])); 
                                         ?>')" title="Szczegóły użytkownika">
                                     <i class="fas fa-info-circle"></i>
@@ -481,20 +493,15 @@ $roleColors = [
                                     </div>
                                     <div class="col-md-6">
                                         <div class="details-section">
-                                            <div class="mb-2 details-ip-container">
-                                                <i class="fas fa-network-wired" title="Adres IP"></i>
-                                                <strong>IP:</strong> 
-                                                <span class="details-ip"></span>
-                                            </div>
                                             <div class="mb-2">
-                                                <i class="fas fa-file-signature" title="Liczba utworzonych petycji"></i>
-                                                <strong>Petycje:</strong> 
-                                                <span class="details-petitions"></span>
-                                            </div>
-                                            <div class="mb-2">
-                                                <i class="fas fa-signature" title="Liczba podpisanych petycji"></i>
-                                                <strong>Podpisy:</strong> 
+                                                <i class="fas fa-file-signature" title="Podpisane petycje"></i>
+                                                <strong>Podpisane petycje (<?php echo $user['signatures_count']; ?>):</strong>
                                                 <span class="details-signatures"></span>
+                                            </div>
+                                            <div class="mb-2">
+                                                <i class="fas fa-file-alt" title="Dodane petycje"></i>
+                                                <strong>Dodane petycje (<?php echo $user['petitions_count']; ?>):</strong>
+                                                <span class="details-petitions"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -819,8 +826,16 @@ function toggleDetails(button, userDataJson) {
     } else {
         detailsContent.querySelector('.details-phone-container').style.display = 'none';
     }
+    
+    // IP adresy
     detailsContent.querySelector('.details-registration-ip').textContent = userData.registration_ip || 'Brak danych';
     detailsContent.querySelector('.details-last-login').textContent = userData.last_login || 'Brak danych';
+    
+    // Petycje
+    detailsContent.querySelector('.details-signatures').textContent = 
+        userData.signed_petition_titles || 'Brak podpisanych petycji';
+    detailsContent.querySelector('.details-petitions').textContent = 
+        userData.petition_titles || 'Brak dodanych petycji';
 
     // Przełączanie widoczności
     if (detailsRow.style.display === 'none') {
