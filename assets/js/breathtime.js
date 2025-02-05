@@ -60,42 +60,85 @@ document.addEventListener('DOMContentLoaded', function() {
         
         camera.position.z = 10;
 
-        // Bazowa rotacja kuli (obrót wokół własnej osi)
-        let baseRotationY = 0;
-        const baseRotationSpeed = 0.001; // Zmniejszona prędkość bazowej rotacji
+        // Fizyka kuli
+        const physics = {
+            velocity: { x: 0, y: 0 },
+            target: { x: 0, y: 0 },
+            momentum: 0.98,              // Wysokie momentum dla płynności
+            sensitivity: 0.12,           // Jeszcze większa czułość
+            attraction: 0.15,            // Większa siła przyciągania
+            baseSpeed: 0.0003,
+            isMouseMoving: false,
+            mouseTimer: null,
+            lastDelta: { x: 0, y: 0 },
+            autoRotation: 0             // Stopień automatycznej rotacji (0-1)
+        };
 
         // Śledzenie myszki
-        let isMouseOver = false;
         container.addEventListener('mousemove', function(event) {
-            isMouseOver = true;
             const rect = container.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            // Obliczanie kąta między myszką a środkiem
-            const angleX = (event.clientX - centerX) / (rect.width / 2) * Math.PI / 4;
-            const angleY = (event.clientY - centerY) / (rect.height / 2) * Math.PI / 4;
+            physics.isMouseMoving = true;
+            physics.autoRotation = 0;    // Natychmiast wyłącz auto-rotację
+            clearTimeout(physics.mouseTimer);
             
-            // Bezpośrednie ustawienie rotacji
-            globe.rotation.y = baseRotationY + angleX;
-            globe.rotation.x = angleY;
+            // Zwiększony czas oczekiwania do 1.5 sekundy
+            physics.mouseTimer = setTimeout(() => {
+                physics.isMouseMoving = false;
+            }, 1500);
+            
+            const targetX = ((event.clientX - centerX) / (rect.width / 2)) * Math.PI * 2.0;  // Zwiększony mnożnik X
+            const targetY = ((event.clientY - centerY) / (rect.height / 2)) * Math.PI * 1.0; // Zwiększony mnożnik Y
+            
+            physics.lastDelta.x = targetX - physics.target.x;
+            physics.lastDelta.y = targetY - physics.target.y;
+            
+            physics.target.x = targetX;
+            physics.target.y = targetY;
         });
 
         container.addEventListener('mouseleave', function() {
-            isMouseOver = false;
+            physics.target.x = 0;
+            physics.target.y = 0;
+            physics.lastDelta.x = 0;
+            physics.lastDelta.y = 0;
+            physics.isMouseMoving = false;
+            physics.autoRotation = 0;    // Reset auto-rotacji
+            clearTimeout(physics.mouseTimer);
         });
         
         // Animacja
         function animate() {
             requestAnimationFrame(animate);
-            
-            // Aktualizacja bazowej rotacji
-            baseRotationY += baseRotationSpeed;
-            
-            // Jeśli myszka nie jest nad kulą, używamy tylko bazowej rotacji
-            if (!isMouseOver) {
-                globe.rotation.y = baseRotationY;
-                // Płynny powrót rotacji X do 0
+
+            if (physics.isMouseMoving) {
+                // Podczas ruchu myszki - tylko śledzenie z inercją
+                let deltaX = physics.target.x - globe.rotation.y;
+                deltaX = ((deltaX + Math.PI) % (Math.PI * 2)) - Math.PI;
+                
+                physics.velocity.x = physics.velocity.x * physics.momentum + 
+                                   (deltaX * physics.attraction) +
+                                   (physics.lastDelta.x * 0.1);
+                
+                physics.velocity.y = physics.velocity.y * physics.momentum + 
+                                   (physics.target.y - globe.rotation.x) * physics.attraction +
+                                   (physics.lastDelta.y * 0.1);
+                
+                globe.rotation.y += physics.velocity.x * physics.sensitivity;
+                globe.rotation.x += physics.velocity.y * physics.sensitivity;
+                
+                physics.lastDelta.x *= 0.95;
+                physics.lastDelta.y *= 0.95;
+            } else {
+                // Płynne przejście do automatycznej rotacji
+                if (physics.autoRotation < 1) {
+                    physics.autoRotation += 0.005; // Bardzo powolne włączanie auto-rotacji
+                }
+                
+                // Aplikuj bazową rotację z płynnym przejściem
+                globe.rotation.y += physics.baseSpeed * physics.autoRotation;
                 globe.rotation.x *= 0.95;
             }
             
