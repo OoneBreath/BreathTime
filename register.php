@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 require_once 'includes/config.php';
 require_once 'includes/Mailer.php';
+require_once 'includes/GeoLocation.php';
 session_start();
 
 if (isset($_SESSION['user_id'])) {
@@ -30,6 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ip_address = $_SERVER['REMOTE_ADDR'];
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        // Pobierz dane geolokalizacyjne
+        try {
+            $geo = GeoLocation::getInstance();
+            $location_data = $geo->getLocationData($ip_address);
+            $country_code = $location_data['country_code'];
+            $country_name = $location_data['country_name'];
+            $city = $location_data['city'];
+            $region = $location_data['region'];
+        } catch (Exception $e) {
+            // Loguj błąd, ale pozwól na rejestrację
+            error_log("Błąd geolokalizacji: " . $e->getMessage());
+            $country_code = '';
+            $country_name = '';
+            $city = '';
+            $region = '';
         }
 
         if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
@@ -74,9 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         // Zapisz użytkownika
         $result = $db->query(
-            "INSERT INTO users (name, email, password, verification_token, status, terms_accepted, marketing_consent, phone, country_code, ip_address) 
-             VALUES (?, ?, ?, ?, 'unverified', ?, ?, ?, ?, ?)",
-            [$name, $email, $hashed_password, $verification_token, $terms_accepted, $marketing_consent, $phone, $country_code, $ip_address]
+            "INSERT INTO users (name, email, password, verification_token, status, terms_accepted, marketing_consent, phone, 
+                              country_code, ip_address, country_name, city, region) 
+             VALUES (?, ?, ?, ?, 'unverified', ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$name, $email, $hashed_password, $verification_token, $terms_accepted, $marketing_consent, $phone, 
+             $country_code, $ip_address, $country_name, $city, $region]
         );
 
         if ($result) {
