@@ -59,11 +59,43 @@ document.addEventListener('DOMContentLoaded', function() {
         scene.add(globe);
         
         camera.position.z = 10;
+
+        // Zmienne do śledzenia myszki
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+
+        // Nasłuchiwanie ruchu myszki
+        container.addEventListener('mousemove', function(event) {
+            // Obliczanie pozycji myszki względem środka kontenera
+            const rect = container.getBoundingClientRect();
+            mouseX = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
+            mouseY = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1;
+            
+            // Obliczanie docelowej rotacji
+            targetRotationY = mouseX * Math.PI * 0.5;
+            targetRotationX = mouseY * Math.PI * 0.25;
+        });
+
+        // Dodanie efektu inercji do obrotu
+        function updateRotation() {
+            // Płynne przejście do docelowej rotacji
+            currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+            currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+
+            // Zastosowanie rotacji do kuli
+            globe.rotation.x = currentRotationX;
+            globe.rotation.y += 0.002; // Bazowa rotacja
+            globe.rotation.y += (targetRotationY - globe.rotation.y) * 0.05;
+        }
         
         // Animacja
         function animate() {
             requestAnimationFrame(animate);
-            globe.rotation.y += 0.002;
+            updateRotation();
             renderer.render(scene, camera);
         }
         animate();
@@ -76,6 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height);
+        });
+
+        // Reset rotacji gdy myszka opuszcza kontener
+        container.addEventListener('mouseleave', function() {
+            targetRotationX = 0;
+            targetRotationY = 0;
         });
     }
     
