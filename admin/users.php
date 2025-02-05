@@ -254,7 +254,7 @@ $users = $db->query(
             (SELECT COUNT(*) FROM petition_proposals pp WHERE pp.user_id = u.id) as petitions_count,
             (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
              FROM petition_proposals pp 
-             JOIN petitions p ON pp.petition_id = p.id 
+             JOIN petitions p ON pp.id = p.id 
              WHERE pp.user_id = u.id 
              LIMIT 3) as petition_titles,
             (SELECT GROUP_CONCAT(DISTINCT p.title SEPARATOR ', ') 
